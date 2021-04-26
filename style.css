@@ -47,3 +47,7 @@ p{
     margin: 30px auto 0px auto;
     display: block;
 }
+
+.makeASelection{
+    cursor: pointer;
+}

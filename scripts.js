@@ -1,13 +1,22 @@
-
-
 // Add event listeners to user selections
 const rockButton = document.querySelector('#rock');
 const paperButton = document.querySelector('#paper');
 const scissorsButton = document.querySelector('#scissors');
 
-rockButton.addEventListener('click', game);
-paperButton.addEventListener('click', game);
-scissorsButton.addEventListener('click', game);
+
+enableClickEvents();
+enableMouseOverEvents();
+enableMouseOutEvents();
+
+
+function mouseOver(){
+  console.log(this.style.height);
+  this.style.height = "180px";
+}
+function mouseOut(){
+  this.style.height = "150px";
+}
+
 
 function game(){
   playerChoice = this.id;
@@ -101,14 +110,14 @@ function checkStatus(){
       result.textContent = "Computer Won!";
     }
     resultsDiv.appendChild(result);
-    //pickone.style.display = "none";
     pickone.style.cssText = 'filter: grayscale(100%); opacity: 40%';
-    rockButton.removeEventListener('click', game);
-    paperButton.removeEventListener('click', game);
-    scissorsButton.removeEventListener('click', game);
+    disableClickEvents();
+    disableMouseOverEvents();
+    disableMouseOutEvents();
     newGameButton.style.display = "block";
   }
 }
+
 
 newGameButton.addEventListener('click', function() {newGame();})
 
@@ -123,7 +132,9 @@ function newGame(){
   resultsDiv.innerHTML = '';
 
   //Show or Hide relevant info
-  enableSelectionClick();
+  enableClickEvents();
+  enableMouseOutEvents();
+  enableMouseOverEvents();
   pickone.style.cssText = 'filter: grayscale(0%); opacity: 100%';
   newGameButton.style.display = "none";
 }
@@ -138,8 +149,39 @@ function addImage(winner){
 }
 
 
-function enableSelectionClick(){
+function enableClickEvents(){
   rockButton.addEventListener('click', game);
   paperButton.addEventListener('click', game);
   scissorsButton.addEventListener('click', game);
 }
+
+function disableClickEvents(){
+  rockButton.removeEventListener('click', game);
+  paperButton.removeEventListener('click', game);
+  scissorsButton.removeEventListener('click', game);
+}
+
+function enableMouseOverEvents(){
+  rockButton.addEventListener("mouseover", mouseOver);
+  paperButton.addEventListener("mouseover", mouseOver);
+  scissorsButton.addEventListener("mouseover", mouseOver);
+}
+
+function disableMouseOverEvents(){
+  rockButton.removeEventListener("mouseover", mouseOver);
+  paperButton.removeEventListener("mouseover", mouseOver);
+  scissorsButton.removeEventListener("mouseover", mouseOver);
+}
+
+function enableMouseOutEvents(){
+  rockButton.addEventListener("mouseout", mouseOut);
+  paperButton.addEventListener("mouseout", mouseOut);
+  scissorsButton.addEventListener("mouseout", mouseOut);
+}
+
+function disableMouseOutEvents(){
+  rockButton.removeEventListener("mouseout", mouseOut);
+  paperButton.removeEventListener("mouseout", mouseOut);
+  scissorsButton.removeEventListener("mouseout", mouseOut);
+}
+
