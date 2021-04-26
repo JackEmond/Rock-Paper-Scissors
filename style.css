@@ -1,0 +1,21 @@
+h1, p, h2, button{
+    text-align: center;
+}
+
+#buttons{
+    display: table;
+    margin: auto;
+}
+
+button{
+    margin: 0 10px;
+}
+
+#results{
+    margin-top: 50px;
+}
+
+#newGame{
+    margin: 10px auto;
+    display: none;
+}
