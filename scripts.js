@@ -1,33 +1,34 @@
-const playerChoices = document.querySelectorAll('.makeASelection');
-
-playerChoices.forEach((playerChoice) => {
-playerChoice.addEventListener('click', function() {game(playerChoice.id);}
-   )
-})
 
 
-function computerChoice(){
-  var myArray = [
-    "rock",
-    "paper",
-    "scissors"
-  ];
-return myArray[Math.floor(Math.random()*myArray.length)];
+// Add event listeners to user selections
+const rockButton = document.querySelector('#rock');
+const paperButton = document.querySelector('#paper');
+const scissorsButton = document.querySelector('#scissors');
+
+rockButton.addEventListener('click', game);
+paperButton.addEventListener('click', game);
+scissorsButton.addEventListener('click', game);
+
+function game(){
+  playerChoice = this.id;
+  playRockPaperScissors(playerChoice);
+
+  //Determine if game is over and return results
+  checkStatus();
 }
 
 
+// Initialize game stats
+let numberofGames = 0;
+let playerWins = 0;
+let computerWins = 0;
+let x;
+
+
+//Play a single round of rock paper scissors and determine the results
 function playRockPaperScissors(playerSelection){
   numberofGames += 1;
-  playerSelection = playerSelection.toLowerCase();
   computerSelection = computerChoice();
-  switch(playerSelection){
-    case 'rock':
-    case 'paper':
-    case 'scissors':
-      break;
-    default: 
-    return 'incorrect data returned';
-  }
 
   if(playerSelection == 'rock' && computerSelection == 'scissors' || 
           playerSelection == 'paper' && computerSelection=='rock' || 
@@ -42,7 +43,6 @@ function playRockPaperScissors(playerSelection){
           playerSelection == 'scissors' && computerSelection =='scissors')
   {
     outputSingleGameResults('tie');
-    ties += 1;
     return;
   }
   else if(playerSelection == 'rock' && computerSelection == 'paper' || 
@@ -59,52 +59,53 @@ function playRockPaperScissors(playerSelection){
   }
 }
 
-const results = document.querySelector('#results');
+//Computer Randomly picks either rock paper or scissors
+function computerChoice(){
+  var myArray = [
+    "rock",
+    "paper",
+    "scissors"
+  ];
+return myArray[Math.floor(Math.random()*myArray.length)];
+}
 
+
+//Set div for the output of the game results
+const resultsDiv = document.querySelector('#results');
+
+// output results in results div
 function outputSingleGameResults(result)
 {
   const output = document.createElement('p');
   output.textContent = result;   
-  results.appendChild(output);
+  resultsDiv.appendChild(output);
 }
-
-let numberofGames = 0;
-let playerWins = 0;
-let computerWins = 0;
-let ties = 0;
-
-function game(playerChoice){
-  playRockPaperScissors(playerChoice);
-  
-  //Determine if game is over and return results
-  const status = checkStatus();
-  if(status == 'completed')
-  {
-    returnResults();
-  }
-  }
-
 
 const pickone = document.querySelector("#pickone");
 const newGameButton = document.querySelector("#newGame");
 
-
+//Determine if the game is over and display results if it is
 function checkStatus(){
   if(playerWins === 3 || computerWins === 3)
   {
     const result = document.createElement('h2');
-    result.style.color = 'blue';
     
     if(playerWins === 3)
     {
+      addImage('player');
       result.textContent = "You Won!";   
     }
     else if(computerWins === 3)
     {
+      addImage('computer');
       result.textContent = "Computer Won!";
     }
-    results.appendChild(result);
-    pickone.style.display = "none";
+    resultsDiv.appendChild(result);
+    //pickone.style.display = "none";
+    pickone.style.cssText = 'filter: grayscale(100%); opacity: 40%';
+    rockButton.removeEventListener('click', game);
+    paperButton.removeEventListener('click', game);
+    scissorsButton.removeEventListener('click', game);
     newGameButton.style.display = "block";
   }
 }
@@ -119,9 +120,26 @@ function newGame(){
   ties = 0;
 
   //clear results
-  results.innerHTML = '';
+  resultsDiv.innerHTML = '';
 
-  //Show or Hide Buttons
-  pickone.style.display = "block";
+  //Show or Hide relevant info
+  enableSelectionClick();
+  pickone.style.cssText = 'filter: grayscale(0%); opacity: 100%';
   newGameButton.style.display = "none";
+}
+
+//Show image with results (either computer or pointing finger)
+function addImage(winner){
+  var image = document.createElement("IMG");
+  image.setAttribute("src", "images/" + winner +".png");
+  image.setAttribute("alt", winner +  " won image");
+  image.setAttribute("id", "imageresult");
+  resultsDiv.appendChild(image);
+}
+
+
+function enableSelectionClick(){
+  rockButton.addEventListener('click', game);
+  paperButton.addEventListener('click', game);
+  scissorsButton.addEventListener('click', game);
 }

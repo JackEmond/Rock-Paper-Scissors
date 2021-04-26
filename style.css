@@ -1,14 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+
 h1, p, h2, button{
     text-align: center;
 }
 
-#buttons{
-    display: table;
-    margin: auto;
+h1, h2{
+    font-family: 'Gloria Hallelujah', cursive;
 }
 
-button{
-    margin: 0 10px;
+h1{
+    font-size: 3em;
+    margin: 0;
+}
+
+h2{
+    margin: 0px;
+}
+
+p{
+    font-family: roboto;
+}
+
+#buttons{
+    display: table;
+    margin: 0 auto;
+}
+
+#buttons img{
+    padding: 20px 0;
 }
 
 #results{
@@ -18,4 +37,13 @@ button{
 #newGame{
     margin: 10px auto;
     display: none;
+}
+
+#pickone{
+    margin-top: 0;
+}
+
+#imageresult{
+    margin: 30px auto 0px auto;
+    display: block;
 }
